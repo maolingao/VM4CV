@@ -30,3 +30,16 @@ diff_blur = y_xy_blur - y_blur;
 sprintf('the max of absolute difference btw direct and separable gaussian blur is %d', max(abs(diff_blur(:))))
 
 %% diffusion
+clear all
+x = double(imread('lena.pgm'));
+% method =  'lin';
+% method =  'pm1';
+% method =  'pm2';
+method =  'msf';
+N = 300; % # iterations
+K = 1; % edge threshold parameter    
+dt = 0.2; %  time increment (0 < dt <= 0.25, default 0.2)
+
+Jd=diffusion_filter(x,method,N,K,dt);
+
+disp('Diffusion finished!')
