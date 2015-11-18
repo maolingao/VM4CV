@@ -18,9 +18,12 @@ sigma = P.Results.sigma;
 %%
 switch type
     case 'gaussian'
-        w = gen_psf_gaussian(m,n,sigma);
+%         w = gen_psf_gaussian(m,n,sigma);
+        w = fspecial('gaussian', [m,n], sigma);
     case 'dirac'
         w = gen_psf_dirac(m,n);
+    case 'motion'
+        w = fspecial('motion', m, n);
     otherwise
         error('not define psf type!')
 end
