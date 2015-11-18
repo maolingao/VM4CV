@@ -29,6 +29,9 @@ if (nargin<3)
     error('not enough arguments (at least 3 should be given)');
 end
 
+% video
+aviobj = avifile('diffusion.avi');
+
 for i=1:N;   
     
     % calculate gradient magnitude for diffusivities
@@ -59,12 +62,19 @@ for i=1:N;
 
     % Next Image J
     
-    % Supplement code here
+    % non-linear diffusion eqn on chp 2 Duffision Filtering, slide 13
     parx = partialDiffu(J, G, 'x');
     pary = partialDiffu(J, G, 'y');
     J = J + dt * (parx + pary);
-    figure(1), imshow(uint8(J)),title(sprintf('Diffusion %d/%d',i,N))
+    fig = figure(1); imshow(uint8(J)),title(sprintf('Diffusion %d/%d',i,N))
+    % for video
+    F = getframe(fig);
+    aviobj = addframe(aviobj,F);
 end; % for i
+
+% for video
+close(fig)
+aviobj = close(aviobj);
 
 Jd = J;
 
