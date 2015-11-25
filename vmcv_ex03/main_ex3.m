@@ -2,27 +2,22 @@
 % main command file
 %% 
 % ground truth image
-x = double(imread('lena.pgm'));
-xsize = size(x);
-figure(1), subplot(2,2,1), imshow(uint8(x)),title('ground truth')
-n = numel(x);
+u = double(imread('lena.pgm'));
+xsize = size(u);
+u = u./max(vec(u));
+figure(1), subplot(1,3,1), imshow(u),title('ground truth')
 
-% prepare linear system M
-lambda = 1e-2; % regularization parameter
-diagn = (1+2*lambda) * ones(n,1);   % non-zero entries
-diagn(1) = 1+lambda; diagn(end) = 1+lambda;
-diagnOffUp = (-lambda) * ones(n-1,1);
-diagnOffDown = (-lambda) * ones(n-1,1);
-entries = [diagnOffUp; diagn; diagnOffDown];
-
-indi = [(1:n-1)';(1:n)';(2:n)']; % index of non-zero entries
-indj = [(2:n)'; (1:n)';(1:n-1)'];
-
-M = sparse(indi,indj,entries); % a large sparse tridiagonal matrix
+% add noise
+SNR = 10;
+f = addnoise(u,SNR,u);
+figure(1), subplot(1,3,2), imshow(f),title(sprintf('noisy %d dB',SNR))
+lambda = 1e0; % regularization parameter
 
 % call gauss_seidel solver
-u = gauss_seidel(M,x); % x is right hand side of linear equation M*x = b
+par.iter = 1e2; par.plot = 'on'; 
+par.u0 = zeros(xsize); % arbitrary initialization, it will converge, due to convexity of the cost function.
+[u]=gauss_seidel(f,lambda,par);
 
 % visualize denoising result
-u_denoised = reshape(u,size(x));
-figure(1), subplot(2,2,1), imshow(uint8(u_denoised)),title('denoised version')
+u_denoised = reshape(u,size(u));
+figure(1), subplot(1,3,3), imshow(u_denoised),title('denoised version')
