@@ -11,11 +11,11 @@ figure(1), subplot(1,3,1), imshow(u),title('ground truth')
 SNR = 10;
 f = addnoise(u,SNR,u);
 figure(1), subplot(1,3,2), imshow(f),title(sprintf('noisy %d dB',SNR))
-lambda = 1e0; % regularization parameter
+lambda = 1e1; % regularization parameter
 
 % call gauss_seidel solver
 par.iter = 1e2; par.plot = 'on'; 
-par.u0 = zeros(xsize); % arbitrary initialization, it will converge, due to convexity of the cost function.
+par.u0 = 0.*ones(xsize); % arbitrary initialization, it will converge, due to convexity of the cost function.
 [u]=gauss_seidel(f,lambda,par);
 
 % visualize denoising result
