@@ -4,7 +4,7 @@
 % ground truth image
 u = double(imread('lena.pgm'));
 xsize = size(u);
-u = u./max(vec(u));
+u = regular(u); 
 figure(1), subplot(1,3,1), imshow(u),title('ground truth')
 
 % add noise
