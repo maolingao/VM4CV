@@ -1,5 +1,5 @@
 function [gd] = grad(f)
-% compute the gradient along the direction, forward gradient and its norm
+% compute the gradient (forward gradient in vector) along the direction and its norm
 
 %% shift-and-substract
 f_shift_x = circshift(f,[0,-1]);
