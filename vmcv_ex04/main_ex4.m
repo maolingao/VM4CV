@@ -29,5 +29,20 @@ figure(1), subplot(1,3,3), imshow(u_denoised_l2),title('denoised version - L2')
 
 %% ex4.3 denoising with L1 regularization 
 % Rudin-Osher-Fatemi(ROF) functional
+% solver - gradient descent
+% cancellation criteria
+aux.itr = 1e5;          % iteration limit
+aux.tol = 1e-6;         % smallest update of estimate
+epsilon = 1e-6;         % for numerical stable
+div = -fgradMtx';       % div = - \nabla^T
 
+% gradient descent solver
+x0 = f;         % initial guess
+fun = @(x)(lambda/2*norm((x-f),'fro')^2 + sum(vec(abs(select(grad(x),3)))));    % loss
+d_grad = @(x)(lambda*(x-f) - div*(fgradMtx*x./(abs(fgradMtx*x)+epsilon)));                       % gradient of loss
+
+x_gd = gd(fun,d_grad,x0,aux);                     % gradient descent solver
+
+% check sol 
+diff = norm(x_gd - u)
 
