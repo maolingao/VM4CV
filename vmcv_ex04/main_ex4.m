@@ -17,7 +17,7 @@ figure(1), subplot(2,2,2), imshow(f),title(sprintf('noisy %d dB',SNR))
 % equivalently solving the linear eqn ->  (lambda - laplacian)*u = lambda*f
 % def matrix A = (lambda - laplacian)
 n = numel(f);
-lambda = 1e0; % inverse regularization parameter
+lambda = 1e-2; % ##inverse## of the usually regularization parameter
 bdy = 'Neumann';
 fgradMtx = grad_mtx(f, bdy);    % gradient operator corresponds dim of f
 flaplacianMtx = -fgradMtx'*fgradMtx; % laplacian operator corresponds dim of f 
