@@ -1,6 +1,6 @@
 function [gd] = grad(f)
 % compute the gradient (forward gradient in vector) along the direction and its norm
-
+% without taking any boundary condition into account
 %% shift-and-substract
 f_shift_x = circshift(f,[0,-1]);
 f_shift_y = circshift(f,[-1,0]);

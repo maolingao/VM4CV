@@ -20,11 +20,14 @@ n = numel(f);
 lambda = 1e0; % inverse regularization parameter
 bdy = 'Neumann';
 fgradMtx = grad_mtx(f, bdy);    % gradient operator corresponds dim of f
-flaplacianMtx = -fgradMtx'*fgradMtx; % laplacian operator corresponds dim of f
+flaplacianMtx = -fgradMtx'*fgradMtx; % laplacian operator corresponds dim of f 
+                                     % laplacian = div nabla =
+                                     % = -nabla^T * nabla (see ex sheet)
 A = lambda*speye(n) - flaplacianMtx; % matrix A of the linear eqn above.
 
-u_denoised_l2_vec = A\(lambda*vec(f));
-u_denoised_l2 = reshape(u_denoised_l2_vec, size(f));
+u_denoised_l2_vec = A\(lambda*vec(f)); % solve the eqn using \
+
+u_denoised_l2 = reshape(u_denoised_l2_vec, size(f)); % reshape and plot
 figure(1), subplot(2,2,3), imshow(u_denoised_l2),title('denoised version - L2')
 
 %% ex4.3 denoising with L1 regularization 
