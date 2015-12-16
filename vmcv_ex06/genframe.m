@@ -1,5 +1,10 @@
 % preparing input sequential imgs
-% warpping (shift) -> downsampling -> blur (gaussian kernel)
+% warpping (shift)  -> blur (gaussian kernel) -> downsampling
+
+% ground truth image
+u = double(imread('Boat.png'));
+usize = size(u);
+u = regular(u); 
 
 for i = 1 : 10
 % warpping (shift)
@@ -9,11 +14,11 @@ us = imshift(u, shift, bbox); % shift the original image
 
 % blurring (gaussian kernel with size n*n)
 m = 5; n = 10; sigma = 1e1*rand(1); 
-fsize = [m,n];
-f = fspecial('gaussian', fsize, sigma); % psf
+hsize = [m,n];
+h = fspecial('gaussian', hsize, sigma); % psf
 
 shape = 'same';
-F = conv2MatOp(f, usize, shape); 
+F = conv2MatOp(h, usize, shape); 
 usb = F*us; % blurring shifted image
 
 % downsampling (by factor 2, using nearest neighbor interpolation)
@@ -21,7 +26,7 @@ df = 1/2; % downsampling factor
 method = 'nearest'; % method to assign pixel value to downsampled img
 usbd = imresize(usb, df, method); % downsampling the blurred, shifted image
 
-f_reg{i} = f;
+h_reg{i} = h;
 imwrite(usbd,sprintf('vmcv_ex06/boadsbd_%d.png',i));
 
 % plot
@@ -32,4 +37,4 @@ imwrite(usbd,sprintf('vmcv_ex06/boadsbd_%d.png',i));
 % subplot(1,4,4); imshow(usbd),title('downsampled, blurred, shifted')
 end
 
-save('vmcv_ex06/psf.mat','f_reg')
+save('vmcv_ex06/psf.mat','h_reg')
