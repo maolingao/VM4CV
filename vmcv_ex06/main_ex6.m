@@ -11,7 +11,13 @@ figure(1), subplot(2,2,1), imshow(u),title('ground truth')
 % 
 load('vmcv_ex06/psf.mat'); % load psf's
 for i = 1:10
-   f = double(imread(sprintf('boadsbd_%d.png',i))); 
+   f = double(imread(sprintf('boadsbd_%d.png',i))); % frame to process
    
-   u = superres_step(A,B,S,U,u,aux);
+   h = h_reg{i}; % blur
+   shape = 'same';
+   H = conv2MatOp(h, usize, shape); 
+   
+   U = @upsamp;                         % operator, upsample(f,tilesize,'average');
+   A = @average;                        % operator, average(u,tilesize,'average');
+   u = superres_step(A,H,S,U,u,aux);
 end
