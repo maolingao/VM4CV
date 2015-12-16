@@ -26,7 +26,8 @@ df = 1/2; % downsampling factor
 method = 'nearest'; % method to assign pixel value to downsampled img
 usbd = imresize(usb, df, method); % downsampling the blurred, shifted image
 
-h_reg{i} = h;
+h_reg{i} = h; %#ok<SAGROW>
+shift_reg{i} = shift;  %#ok<SAGROW>
 imwrite(usbd,sprintf('vmcv_ex06/boadsbd_%d.png',i));
 
 % plot
@@ -38,3 +39,4 @@ imwrite(usbd,sprintf('vmcv_ex06/boadsbd_%d.png',i));
 end
 
 save('vmcv_ex06/psf.mat','h_reg')
+save('vmcv_ex06/shifts.mat','shift_reg')
