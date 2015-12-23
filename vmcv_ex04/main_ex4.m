@@ -44,6 +44,8 @@ x0 = f;         % initial guess
 fun = @(x)(lambda/2*norm((x-f),'fro')^2 + sum(vec(abs(select(grad(x),3)))));    % loss
 d_grad = @(x)(lambda*(x-f) - reshape(div*(fgradMtx*vec(x)./(abs(fgradMtx*vec(x))+epsilon)),size(f)));                       % gradient of loss
 
+
+figure(1), subplot(2,2,4)
 u_denoised_l1 = gd(fun,d_grad,x0,aux);                     % gradient descent solver
 
 

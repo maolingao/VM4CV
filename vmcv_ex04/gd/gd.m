@@ -27,7 +27,7 @@ for k = 1 : aux.itr
     x = x + chg;                    % next guess
     assert(fun(x) - fun(x-chg) <= 0, 'ATTENTION : loss funtion is increasing!')
     
-    figure(1), subplot(2,2,4), imshow(x),title(sprintf('L1(ROF) %d/%d',k,aux.itr));
+    figure(1), imshow(x),title(sprintf('processing %d/%d',k,aux.itr));
     
     if norm(chg,2) < aux.tol
         sprintf('the number of iterations : %d.', k)
