@@ -23,7 +23,6 @@ for i = 1:10
    
    
    A = @average;                        % operator, average(u,tilesize,'average');
-   S = @imshift;                        % operator, imshift(u, shift, bbox);
    U = @upsampling;                         % operator, upsamp(f,tilesize,'average');
    
    aux.method = 'simple';              % for operators: average, upsampling
@@ -33,7 +32,8 @@ for i = 1:10
    aux.uinit = U(f,aux);                    % initial guess of super resolved img
    
    
-   S = shiftOp([0,10], 'same');
+   S = shiftOp(shift_reg{i}, aux.bbox);  % operator shift
+   A = averageOp(aux.tilesize,aux.method); % operator average
    
    u = superres_step(A,B,S,U,f,aux);
    
