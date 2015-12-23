@@ -21,6 +21,7 @@ for i = 1:10
    shape = 'same';
    B = conv2MatOp(h, usize, shape);     % operator, blurring;
    
+   
    A = @average;                        % operator, average(u,tilesize,'average');
    S = @imshift;                        % operator, imshift(u, shift, bbox);
    U = @upsampling;                         % operator, upsamp(f,tilesize,'average');
@@ -30,6 +31,9 @@ for i = 1:10
    aux.bbox = 'same';                   % for operator: imshift
    aux.shifts = shift_reg;
    aux.uinit = U(f,aux);                    % initial guess of super resolved img
+   
+   
+   S = shiftOp([0,10], 'same');
    
    u = superres_step(A,B,S,U,f,aux);
    

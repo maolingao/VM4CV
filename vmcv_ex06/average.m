@@ -8,7 +8,9 @@ if ~exist('aux','var')
 end
 
 method = aux.method;
-tilesize = aux.tilesize;
+tilesize = aux.tilesize; % usize must be integer-multiple of the tilesize, mod(usize,tilesize) == 0.
+                         % otherwise the some tiles would have enough
+                         % pixels to average.
 i_space = tilesize(1); j_space = tilesize(2);
 i_stat = i_space; j_stat = j_space;
 
