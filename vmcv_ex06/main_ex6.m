@@ -5,7 +5,7 @@
 u = double(imread('Boat.png'));
 usize = size(u);
 u = regular(u); 
-figure(1), subplot(2,2,1), imshow(u),title('ground truth')
+figure(1), subplot(1,2,1), imshow(u),title('ground truth')
 
 %% super-resolution
 % 
