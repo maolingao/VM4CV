@@ -25,12 +25,12 @@ for i = 1:10
    S = @imshift;                        % operator, imshift(u, shift, bbox);
    U = @upsampling;                         % operator, upsamp(f,tilesize,'average');
    
-   aux.method = 'average';              % for operators: average, upsamp
+   aux.method = 'simple';              % for operators: average, upsampling
    aux.tilesize = [2,2];
    aux.bbox = 'same';                   % for operator: imshift
    aux.shifts = shift_reg;
-   aux.uinit = U(f);                    % initial guess of super resolved img
+   aux.uinit = U(f,aux);                    % initial guess of super resolved img
    
-   u = superres_step(A,B,S,U,aux);
+   u = superres_step(A,B,S,U,f,aux);
    
 end

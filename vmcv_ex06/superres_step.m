@@ -1,4 +1,4 @@
-function [u] = superres_step(A,B,S,U,aux)
+function [u] = superres_step(A,B,S,U,f,aux)
 % super resolution for one frame
 
 method = aux.method;               % for operators: average, upsamp
