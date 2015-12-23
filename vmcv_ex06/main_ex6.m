@@ -15,6 +15,7 @@ load('vmcv_ex06/shifts.mat'); % load psf's
 for i = 1:10
     
    f = double(imread(sprintf('boadsbd_%d.png',i))); % frame to process
+   f = regular(f); 
    
    h = h_reg{i}; % blur
    shape = 'same';
@@ -22,13 +23,14 @@ for i = 1:10
    
    A = @average;                        % operator, average(u,tilesize,'average');
    S = @imshift;                        % operator, imshift(u, shift, bbox);
-   U = @upsamp;                         % operator, upsamp(f,tilesize,'average');
+   U = @upsampling;                         % operator, upsamp(f,tilesize,'average');
    
    aux.method = 'average';              % for operators: average, upsamp
    aux.tilesize = [2,2];
    aux.bbox = 'same';                   % for operator: imshift
    aux.shifts = shift_reg;
-
-   u = superres_step(A,B,S,U,u,aux);
+   aux.uinit = U(f);                    % initial guess of super resolved img
+   
+   u = superres_step(A,B,S,U,aux);
    
 end

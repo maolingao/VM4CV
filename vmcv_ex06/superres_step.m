@@ -1,12 +1,13 @@
-function [u] = superres_step(A,B,S,U,u_init,aux)
+function [u] = superres_step(A,B,S,U,aux)
 % super resolution for one frame
 
 method = aux.method;               % for operators: average, upsamp
 tilesize = aux.tilesize;
 bbox = aux.bbox;                   % for operator: imshift
 shifts = aux.shifts;
+uinit = aux.uinit;                 % initial guess of super resolved img
 
 shift = shifts{1};
-imshow(S(u, shift, bbox));
+imshow(S(uinit, shift, bbox));
 
 end
