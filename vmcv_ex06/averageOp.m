@@ -1,5 +1,5 @@
 classdef averageOp < handle
-    % Shift Operator Summary of this class goes here
+    % Average Operator Summary of this class goes here
     %   Detailed explanation goes here
     
     properties
@@ -39,7 +39,7 @@ classdef averageOp < handle
        end
        
        function obj = ctranspose(obj)
-           % conjugate of the shift operator
+           % conjugate of the average operator
            obj.flag = 1;
        end
        
